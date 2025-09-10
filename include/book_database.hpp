@@ -84,7 +84,7 @@ public:
     }
     void PushBack(Book &&book) {
         extractAuthor(book);
-        PushBack(std::move(book));
+        books_.push_back(std::move(book));
     }
     template <typename... Args>
     reference EmplaceBack(Args &&...args) {

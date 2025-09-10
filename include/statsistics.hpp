@@ -57,7 +57,7 @@ VectorBookRefs sampleRandomBooks(const BookDatabase<T> &db, size_t N) {
 }
 
 template <BookContainerLike T, typename Comparator>
-VectorBookRefs getTopNBy(BookDatabase<T> &db, size_t N, Comparator comp = {}) {
+VectorBookRefs getTopNBy(BookDatabase<T> &db, size_t N, Comparator comp) {
     if (db.Empty()) {
         return {};
     }

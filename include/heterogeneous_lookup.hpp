@@ -8,7 +8,7 @@ namespace bookdb {
 struct TransparentStringLess {
     using is_transparent = void;
     bool operator()(std::string_view lhs, std::string_view rhs) const {
-        return std::ranges::lexicographical_compare(lhs, rhs);
+        return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
 
     bool operator()(const std::string &lhs, const std::string_view rhs) const {
