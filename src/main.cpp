@@ -20,6 +20,17 @@ int main() {
     // Create a book database
     BookDatabase<std::vector<Book>> db;
 
+
+    Book book1("1984", "George Orwell", 1949, Genre::SciFi, 4., 190);
+    Book book2("Animal Farm", "George Orwell", 1945, Genre::Fiction, 4.4, 143);
+    Book book3("The Great Gatsby", "F. Scott Fitzgerald", 1925, Genre::Fiction, 4.5, 120);
+    Book book4("To Kill a Mockingbird", "Harper Lee", 1960, Genre::Fiction, 4.8, 156);
+    Book book5("Pride and Prejudice", "Jane Austen", 1813, Genre::Fiction, 4.7, 178);
+    Book book6("The Catcher in the Rye", "J.D. Salinger", 1951, Genre::Fiction, 4.3, 112);
+
+    std::println("{}", book1);
+
+
     /*
 
     Код закомментирован, чтобы не приводить к ошибке компиляции

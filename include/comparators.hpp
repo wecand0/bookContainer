@@ -4,6 +4,27 @@
 
 namespace bookdb::comp {
 
-struct LessByAuthor {};
+
+struct LessByAuthor {
+    using is_transparent = void;
+
+    bool operator()(const Book &lhs, const Book &rhs) const {
+        return std::ranges::lexicographical_compare(lhs.author_, rhs.author_);
+    }
+    bool operator()(const Book &lhs, std::string_view rhs) const {
+        return std::ranges::lexicographical_compare(lhs.author_, rhs);
+    }
+    bool operator()(std::string_view lhs, const Book &rhs) const {
+        return std::ranges::lexicographical_compare(lhs, rhs.author_);
+    }
+};
+
+struct GreaterByRating {
+    using is_transparent = void;
+
+    bool operator()(const Book &lhs, const Book &rhs) const { return lhs.rating_ > rhs.rating_; }
+    bool operator()(const Book &lhs, const double rhs) const { return lhs.rating_ > rhs; }
+    bool operator()(const double lhs, const Book &rhs) const { return lhs > rhs.rating_; }
+};
 
 }  // namespace bookdb::comp
