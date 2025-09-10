@@ -1,9 +1,9 @@
 #pragma once
 
 #include <algorithm>
+#include <flat_map>
 #include <iterator>
 #include <random>
-#include <flat_map>
 #include <string_view>
 
 #include "book_database.hpp"
@@ -16,7 +16,7 @@ template <BookContainerLike T, typename Comparator = TransparentStringLess>
 auto buildAuthorHistogramFlat(const BookDatabase<T> &db, Comparator comp = {}) {
     std::flat_map<std::string_view, size_t, Comparator> result;
     for (const auto &book : db) {
-        ++result[std::ref(book.author)];
+        ++result[std::ref(book.author_)];
     }
     return result;
 }
@@ -30,9 +30,9 @@ auto calculateGenreRatings(const BookDatabase<T> &db) {
     std::flat_map<Genre, GenreInfo> genre_info;
     std::flat_map<Genre, double> result;
     for (const auto &book : db) {
-        Genre key = book.genre;
+        Genre key = book.genre_;
         GenreInfo &current_info = genre_info[key];
-        current_info.rating += book.rating;
+        current_info.rating += book.rating_;
         ++current_info.counter;
     }
     std::transform(genre_info.begin(), genre_info.end(), std::inserter(result, result.begin()),
@@ -44,9 +44,9 @@ auto calculateGenreRatings(const BookDatabase<T> &db) {
 
 template <BookContainerLike T>
 double calculateAverageRating(const BookDatabase<T> &db) {
-    return db.empty() ? 0 : std::accumulate(db.begin(), db.end(), 0., [](double sum, const Book &book) {
+    return db.Empty() ? 0 : std::accumulate(db.begin(), db.end(), 0., [](const double sum, const Book &book) {
                                 return sum + book.rating_;
-                            }) / db.size();
+                            }) / db.Size();
 }
 
 template <BookContainerLike T>
@@ -56,13 +56,13 @@ VectorBookRefs sampleRandomBooks(const BookDatabase<T> &db, size_t N) {
     return result;
 }
 
-template <BookContainerLike T>
-VectorBookRefs getTopNBy(BookDatabase<T> &db, size_t N) {
-    if (db.empty()) {
+template <BookContainerLike T, typename Comparator>
+VectorBookRefs getTopNBy(BookDatabase<T> &db, size_t N, Comparator comp = {}) {
+    if (db.Empty()) {
         return {};
     }
-    auto result_end = db.begin() + std::min(N, db.size() - 1);
-    std::nth_element(db.begin(), result_end, db.end(), comp::GreaterByRating());
+    auto result_end = db.begin() + std::min(N, db.Size() - 1);
+    std::nth_element(db.begin(), result_end, db.end(), comp);
     return {db.begin(), result_end};
 }
 

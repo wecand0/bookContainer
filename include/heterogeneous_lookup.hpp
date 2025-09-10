@@ -5,7 +5,6 @@
 
 namespace bookdb {
 
-
 struct TransparentStringLess {
     using is_transparent = void;
     bool operator()(std::string_view lhs, std::string_view rhs) const {

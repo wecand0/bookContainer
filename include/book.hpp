@@ -17,9 +17,8 @@ static constexpr std::array<std::pair<std::string_view, Genre>, 5> genres_arr{{{
                                                                                {"Mystery", Genre::Mystery}}};
 
 constexpr Genre GenreFromString(std::string_view s) {
-    const auto it = std::ranges::find_if(
-        genres_arr,
-                               [s](const std::pair<std::string_view, Genre> &el) { return el.first == s; });
+    const auto it =
+        std::ranges::find_if(genres_arr, [s](const std::pair<std::string_view, Genre> &el) { return el.first == s; });
 
     if (it != genres_arr.end()) {
         return it->second;
@@ -28,18 +27,6 @@ constexpr Genre GenreFromString(std::string_view s) {
 }
 
 struct Book {
-    constexpr Book(const std::string_view title, const std::string_view author, const uint16_t year, const Genre genre,
-                   const float rating, const int read_count)
-        : author_(author), title_(title), year_(year), genre_(genre), rating_(rating),
-          read_count_(read_count) {}
-
-    // Constexpr конструктор с Genre как строка
-    constexpr Book(const std::string_view title, const std::string_view author, const uint16_t year, const std::string_view genre,
-                   const float rating, const int read_count)
-        : author_(author), title_(title), year_(year), genre_(GenreFromString(genre)), rating_(rating),
-          read_count_(read_count) {}
-
-
     // string_view для экономии памяти, чтобы ссылаться на оригинальную строку, хранящуюся в другом контейнере
     std::string_view author_;
     std::string title_;
@@ -50,9 +37,16 @@ struct Book {
     int read_count_{};
 
     // Ваш код для конструкторов здесь
+    constexpr Book(const std::string_view title, const std::string_view author, const uint16_t year, const Genre genre,
+               const float rating, const int read_count)
+    : author_(author), title_(title), year_(year), genre_(genre), rating_(rating), read_count_(read_count) {}
+
+    constexpr Book(const std::string_view title, const std::string_view author, const uint16_t year,
+                   const std::string_view genre, const float rating, const int read_count)
+        : author_(author), title_(title), year_(year), genre_(GenreFromString(genre)), rating_(rating),
+          read_count_(read_count) {}
 };
 }  // namespace bookdb
-
 
 namespace std {
 template <>
