@@ -7,14 +7,15 @@ namespace bookdb::comp {
 struct LessByAuthor {
     using is_transparent = void;
 
-    bool operator()(const Book &lhs, const Book &rhs) const {
-        return std::ranges::lexicographical_compare(lhs.author_, rhs.author_);
+    bool operator()(const Book &lhs, const Book &rhs) {
+        return std::lexicographical_compare(lhs.author_.begin(), lhs.author_.end(), rhs.author_.begin(),
+                                            rhs.author_.end());
     }
-    bool operator()(const Book &lhs, std::string_view rhs) const {
-        return std::ranges::lexicographical_compare(lhs.author_, rhs);
+    bool operator()(const Book &lhs, std::string_view rhs) {
+        return std::lexicographical_compare(lhs.author_.begin(), lhs.author_.end(), rhs.begin(), rhs.end());
     }
-    bool operator()(std::string_view lhs, const Book &rhs) const {
-        return std::ranges::lexicographical_compare(lhs, rhs.author_);
+    bool operator()(std::string_view lhs, const Book &rhs) {
+        return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.author_.begin(), rhs.author_.end());
     }
 };
 // LessByPopularity

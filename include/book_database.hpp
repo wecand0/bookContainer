@@ -25,7 +25,6 @@ public:
     using const_reverse_iterator = std::vector<Book>::const_reverse_iterator;
     using difference_type = BookContainer::difference_type;
     using size_type = BookContainer::size_type;
-    // Ваш код здесь
 
     using AuthorContainer = std::unordered_set<std::string, TransparentStringHash>;
 

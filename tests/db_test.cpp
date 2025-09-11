@@ -15,16 +15,16 @@ TEST(BookDatabase, addBook) {
     EXPECT_EQ(db.Size(), 2);
 
     // push_back
-    db.PushBack({"Weir", "Hail Mary", 2021, Genre::SciFi, 5.4, 1000});
+    db.PushBack({"aaa", "pipupu", 2099, Genre::SciFi, 5.4, 1000});
     EXPECT_EQ(db.Size(), 3);
-    EXPECT_EQ(db.at(2).title_, "Weir");
-    EXPECT_EQ(db.at(2).author_, "Hail Mary");
+    EXPECT_EQ(db.at(0).title_, "HighAndLow");
+    EXPECT_EQ(db.at(2).author_, "pipupu");
 
     // emplace_back
-    decltype(db)::reference last_book = db.EmplaceBack("Kahneman", "Fast and Slow", 2011, "NonFiction", 5.8, 1000);
+    const auto last_book = db.EmplaceBack("kiki", "toto", 1911, "NonFiction", 5.8, 1000);
     EXPECT_EQ(db.Size(), 4);
-    EXPECT_EQ(last_book.title_, "Kahneman");
-    EXPECT_EQ(last_book.author_, "Fast and Slow");
+    EXPECT_EQ(last_book.title_, "kiki");
+    EXPECT_EQ(last_book.author_, "toto");
     EXPECT_EQ(last_book.genre_, Genre::NonFiction);
 }
 
@@ -49,4 +49,9 @@ TEST(BookDatabase, emptyDb) {
     EXPECT_EQ(db.GetBooks().empty(), true);
     EXPECT_EQ(db.GetAuthors().empty(), true);
     EXPECT_EQ(std::distance(db.begin(), db.end()), 0);
+}
+
+TEST(BookDatabase, badInput) {
+    BookDatabase db = makeBookDb();
+    EXPECT_NE(db.at(0).author_, "noooo");
 }

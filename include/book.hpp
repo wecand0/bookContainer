@@ -38,8 +38,8 @@ struct Book {
 
     // Ваш код для конструкторов здесь
     constexpr Book(const std::string_view title, const std::string_view author, const uint16_t year, const Genre genre,
-               const float rating, const int read_count)
-    : author_(author), title_(title), year_(year), genre_(genre), rating_(rating), read_count_(read_count) {}
+                   const float rating, const int read_count)
+        : author_(author), title_(title), year_(year), genre_(genre), rating_(rating), read_count_(read_count) {}
 
     constexpr Book(const std::string_view title, const std::string_view author, const uint16_t year,
                    const std::string_view genre, const float rating, const int read_count)
